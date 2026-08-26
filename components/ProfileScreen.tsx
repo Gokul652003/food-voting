@@ -11,7 +11,7 @@ import { useAuth } from '@/context/AuthContext';
 import { ROLE_LABEL } from '@/utils/roles';
 
 export function ProfileScreen() {
-  const { colors, spacing, fontSize, radius } = useTheme();
+  const { colors, spacing, fontSize, radius, shadow, letterSpacing } = useTheme();
   const { user, logout } = useAuth();
   const router = useRouter();
 
@@ -32,17 +32,52 @@ export function ProfileScreen() {
           <View
             style={[
               styles.avatar,
-              { backgroundColor: colors.primaryMuted, borderRadius: radius.pill, width: 64, height: 64 },
+              shadow.md,
+              { backgroundColor: colors.primary, borderRadius: radius.pill, width: 72, height: 72 },
             ]}
           >
-            <Text style={{ color: colors.primary, fontSize: fontSize.xl, fontWeight: '800' }}>{initials}</Text>
+            <Text style={{ color: colors.primaryText, fontSize: fontSize.xl, fontWeight: '800' }}>{initials}</Text>
           </View>
-          <Text style={{ color: colors.text, fontSize: fontSize.xl, fontWeight: '800', marginTop: spacing.md }}>
+          <Text
+            style={{
+              color: colors.text,
+              fontSize: fontSize.xl,
+              fontWeight: '800',
+              letterSpacing: letterSpacing.tight,
+              marginTop: spacing.md,
+            }}
+          >
             {user.name}
           </Text>
           <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: 2 }}>{user.email}</Text>
           <View style={{ marginTop: spacing.sm }}>
-            <Badge label={ROLE_LABEL[user.role]} variant="primary" />
+            <Badge label={ROLE_LABEL[user.role]} variant="primary" dot />
+          </View>
+        </Card>
+
+        <Text
+          style={{
+            color: colors.textMuted,
+            fontSize: fontSize.xs,
+            fontWeight: '700',
+            letterSpacing: letterSpacing.wider,
+            textTransform: 'uppercase',
+            marginTop: spacing.xl,
+            marginBottom: spacing.sm,
+            marginLeft: spacing.xs,
+          }}
+        >
+          Account
+        </Text>
+        <Card style={{ padding: 0 }} elevated={false}>
+          <View style={[styles.infoRow, { padding: spacing.lg }]}>
+            <Text style={{ color: colors.textMuted, fontSize: fontSize.sm }}>Role</Text>
+            <Text style={{ color: colors.text, fontSize: fontSize.sm, fontWeight: '600' }}>{ROLE_LABEL[user.role]}</Text>
+          </View>
+          <View style={{ height: StyleSheet.hairlineWidth, backgroundColor: colors.border }} />
+          <View style={[styles.infoRow, { padding: spacing.lg }]}>
+            <Text style={{ color: colors.textMuted, fontSize: fontSize.sm }}>Email</Text>
+            <Text style={{ color: colors.text, fontSize: fontSize.sm, fontWeight: '600' }}>{user.email}</Text>
           </View>
         </Card>
 
@@ -69,5 +104,10 @@ const styles = StyleSheet.create({
   avatar: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  infoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });
