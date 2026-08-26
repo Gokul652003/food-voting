@@ -8,9 +8,10 @@ type Variant = 'neutral' | 'primary' | 'success' | 'danger';
 interface BadgeProps {
   label: string;
   variant?: Variant;
+  dot?: boolean;
 }
 
-export function Badge({ label, variant = 'neutral' }: BadgeProps) {
+export function Badge({ label, variant = 'neutral', dot = false }: BadgeProps) {
   const { colors, spacing, radius, fontSize } = useTheme();
 
   const palette: Record<Variant, { bg: string; fg: string }> = {
@@ -28,12 +29,14 @@ export function Badge({ label, variant = 'neutral' }: BadgeProps) {
         {
           backgroundColor: p.bg,
           borderRadius: radius.pill,
-          paddingVertical: spacing.xs / 2,
-          paddingHorizontal: spacing.sm,
+          paddingVertical: spacing.xs / 2 + 1,
+          paddingHorizontal: spacing.sm + 2,
+          gap: spacing.xs / 2,
         },
       ]}
     >
-      <Text style={{ color: p.fg, fontSize: fontSize.xs, fontWeight: '700' }}>{label}</Text>
+      {dot ? <View style={[styles.dot, { backgroundColor: p.fg }]} /> : null}
+      <Text style={{ color: p.fg, fontSize: fontSize.xs, fontWeight: '700', letterSpacing: 0.2 }}>{label}</Text>
     </View>
   );
 }
@@ -41,5 +44,12 @@ export function Badge({ label, variant = 'neutral' }: BadgeProps) {
 const styles = StyleSheet.create({
   base: {
     alignSelf: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
   },
 });
