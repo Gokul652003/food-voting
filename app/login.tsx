@@ -10,13 +10,13 @@ import { useData } from '@/context/DataContext';
 import { roleHomePath } from '@/utils/roles';
 
 const DEMO_ACCOUNTS = [
-  { email: 'admin@company.com', label: 'Admin', description: 'Manage catalog & staff' },
-  { email: 'chef@company.com', label: 'Chef', description: 'Run the kitchen & tallies' },
-  { email: 'employee@company.com', label: 'Employee', description: 'Vote on the menu' },
+  { email: 'admin@company.com', label: 'Admin', description: 'Manage catalog & staff', icon: '🛠️' },
+  { email: 'chef@company.com', label: 'Chef', description: 'Run the kitchen & tallies', icon: '👨‍🍳' },
+  { email: 'employee@company.com', label: 'Employee', description: 'Vote on the menu', icon: '🙋' },
 ];
 
 export default function Login() {
-  const { colors, spacing, radius, fontSize } = useTheme();
+  const { colors, spacing, radius, fontSize, shadow, letterSpacing } = useTheme();
   const { user, login } = useAuth();
   const { loading: dataLoading } = useData();
   const [email, setEmail] = useState('');
@@ -38,21 +38,44 @@ export default function Login() {
     }
   };
 
+  const busy = submitting || dataLoading;
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1, backgroundColor: colors.background }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView contentContainerStyle={{ padding: spacing.xl, paddingTop: spacing.xxl * 2, flexGrow: 1 }}>
-        <Text style={{ fontSize: fontSize.xxl, fontWeight: '800', color: colors.text }}>🍛 Food Voting</Text>
+        <View
+          style={[
+            styles.mark,
+            shadow.md,
+            { backgroundColor: colors.primary, borderRadius: radius.lg, marginBottom: spacing.lg },
+          ]}
+        >
+          <Text style={{ fontSize: 26 }}>🍛</Text>
+        </View>
+        <Text style={{ fontSize: fontSize.xxxl, fontWeight: '800', color: colors.text, letterSpacing: letterSpacing.tight }}>
+          Food Voting
+        </Text>
         <Text style={{ fontSize: fontSize.md, color: colors.textMuted, marginTop: spacing.xs, marginBottom: spacing.xl }}>
           Vote on today's kitchen menu, or manage it if you run the show.
         </Text>
 
         <Card>
-          <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: '700', marginBottom: spacing.sm }}>
+          <Text
+            style={{
+              color: colors.textMuted,
+              fontSize: fontSize.xs,
+              fontWeight: '700',
+              letterSpacing: letterSpacing.wider,
+              textTransform: 'uppercase',
+              marginBottom: spacing.md,
+            }}
+          >
             Sign in
           </Text>
+          <Text style={{ color: colors.textMuted, fontSize: fontSize.xs, marginBottom: 4 }}>Email</Text>
           <TextInput
             value={email}
             onChangeText={setEmail}
@@ -62,47 +85,59 @@ export default function Login() {
             keyboardType="email-address"
             style={[
               styles.input,
-              { borderColor: colors.border, color: colors.text, borderRadius: radius.sm, marginBottom: spacing.sm },
+              {
+                borderColor: colors.border,
+                backgroundColor: colors.surfaceAlt,
+                color: colors.text,
+                borderRadius: radius.sm,
+                marginBottom: spacing.sm,
+              },
             ]}
           />
+          <Text style={{ color: colors.textMuted, fontSize: fontSize.xs, marginBottom: 4 }}>Password</Text>
           <TextInput
             value={password}
             onChangeText={setPassword}
-            placeholder="Password (any value works in this demo)"
+            placeholder="Any value works in this demo"
             placeholderTextColor={colors.textMuted}
             secureTextEntry
-            style={[styles.input, { borderColor: colors.border, color: colors.text, borderRadius: radius.sm }]}
+            style={[
+              styles.input,
+              { borderColor: colors.border, backgroundColor: colors.surfaceAlt, color: colors.text, borderRadius: radius.sm },
+            ]}
           />
           {error ? (
             <Text style={{ color: colors.danger, fontSize: fontSize.sm, marginTop: spacing.sm }}>{error}</Text>
           ) : null}
           <View style={{ marginTop: spacing.md }}>
-            <Button
-              label="Log in"
-              onPress={() => submit(email)}
-              loading={submitting || dataLoading}
-              disabled={!email}
-              fullWidth
-            />
+            <Button label="Log in" onPress={() => submit(email)} loading={busy} disabled={!email} fullWidth />
           </View>
         </Card>
 
-        <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: spacing.xl, marginBottom: spacing.sm }}>
-          Or jump in as a demo account
-        </Text>
+        <View style={styles.dividerRow}>
+          <View style={{ flex: 1, height: StyleSheet.hairlineWidth, backgroundColor: colors.border }} />
+          <Text style={{ color: colors.textMuted, fontSize: fontSize.xs, marginHorizontal: spacing.sm }}>
+            OR JUMP IN AS A DEMO ACCOUNT
+          </Text>
+          <View style={{ flex: 1, height: StyleSheet.hairlineWidth, backgroundColor: colors.border }} />
+        </View>
+
         {DEMO_ACCOUNTS.map((acc) => (
-          <Card key={acc.email} style={{ marginBottom: spacing.sm, opacity: submitting || dataLoading ? 0.6 : 1 }}>
+          <Card key={acc.email} style={{ marginBottom: spacing.sm, opacity: busy ? 0.6 : 1 }}>
             <View style={styles.demoRow}>
+              <View
+                style={[
+                  styles.demoIcon,
+                  { backgroundColor: colors.surfaceAlt, borderRadius: radius.md, marginRight: spacing.md },
+                ]}
+              >
+                <Text style={{ fontSize: 20 }}>{acc.icon}</Text>
+              </View>
               <View style={{ flex: 1 }}>
                 <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: '700' }}>{acc.label}</Text>
                 <Text style={{ color: colors.textMuted, fontSize: fontSize.sm }}>{acc.description}</Text>
               </View>
-              <Button
-                label="Use"
-                variant="secondary"
-                onPress={() => submit(acc.email)}
-                disabled={submitting || dataLoading}
-              />
+              <Button label="Use" variant="secondary" size="sm" onPress={() => submit(acc.email)} disabled={busy} />
             </View>
           </Card>
         ))}
@@ -112,14 +147,32 @@ export default function Login() {
 }
 
 const styles = StyleSheet.create({
+  mark: {
+    width: 56,
+    height: 56,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   input: {
     borderWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: 12,
     paddingVertical: 10,
     fontSize: 15,
   },
+  dividerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 28,
+    marginBottom: 12,
+  },
   demoRow: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  demoIcon: {
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
