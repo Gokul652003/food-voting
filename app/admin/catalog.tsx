@@ -80,7 +80,7 @@ export default function Catalog() {
       <ScreenHeader
         title="Menu Catalog"
         subtitle="The master list chefs pick from"
-        right={!draft ? <Button label="+ Add item" onPress={startAdd} /> : undefined}
+        right={!draft ? <Button label="+ Add item" size="sm" onPress={startAdd} /> : undefined}
       />
       <ScrollView contentContainerStyle={{ padding: spacing.lg, paddingBottom: spacing.xxl }}>
         {draft ? (
