@@ -64,16 +64,21 @@ export default function Users() {
       <ScrollView contentContainerStyle={{ padding: spacing.lg, paddingBottom: spacing.xxl }}>
         {draft ? (
           <Card style={{ marginBottom: spacing.xl }}>
-            <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: '700', marginBottom: spacing.sm }}>
+            <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: '700', marginBottom: spacing.md }}>
               {draft.id ? 'Edit staff member' : 'New staff member'}
             </Text>
+            <Text style={{ color: colors.textMuted, fontSize: fontSize.xs, marginBottom: 4 }}>Full name</Text>
             <TextInput
               value={draft.name}
               onChangeText={(name) => setDraft((d) => (d ? { ...d, name } : d))}
               placeholder="Full name"
               placeholderTextColor={colors.textMuted}
-              style={[styles.input, { borderColor: colors.border, color: colors.text, borderRadius: radius.sm }]}
+              style={[
+                styles.input,
+                { borderColor: colors.border, backgroundColor: colors.surfaceAlt, color: colors.text, borderRadius: radius.sm },
+              ]}
             />
+            <Text style={{ color: colors.textMuted, fontSize: fontSize.xs, marginTop: spacing.sm, marginBottom: 4 }}>Email</Text>
             <TextInput
               value={draft.email}
               onChangeText={(email) => setDraft((d) => (d ? { ...d, email } : d))}
@@ -81,7 +86,10 @@ export default function Users() {
               placeholderTextColor={colors.textMuted}
               autoCapitalize="none"
               keyboardType="email-address"
-              style={[styles.input, { borderColor: colors.border, color: colors.text, borderRadius: radius.sm, marginTop: spacing.sm }]}
+              style={[
+                styles.input,
+                { borderColor: colors.border, backgroundColor: colors.surfaceAlt, color: colors.text, borderRadius: radius.sm },
+              ]}
             />
 
             <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: spacing.md, marginBottom: spacing.xs }}>Role</Text>
