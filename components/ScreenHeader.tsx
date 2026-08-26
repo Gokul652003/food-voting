@@ -11,7 +11,7 @@ interface ScreenHeaderProps {
 }
 
 export function ScreenHeader({ title, subtitle, right }: ScreenHeaderProps) {
-  const { colors, spacing, fontSize } = useTheme();
+  const { colors, spacing, fontSize, letterSpacing } = useTheme();
   const insets = useSafeAreaInsets();
 
   return (
@@ -21,16 +21,25 @@ export function ScreenHeader({ title, subtitle, right }: ScreenHeaderProps) {
         {
           paddingTop: insets.top + spacing.md,
           paddingHorizontal: spacing.lg,
-          paddingBottom: spacing.md,
+          paddingBottom: spacing.lg,
           backgroundColor: colors.background,
           borderBottomColor: colors.border,
         },
       ]}
     >
       <View style={{ flex: 1 }}>
-        <Text style={{ color: colors.text, fontSize: fontSize.xxl, fontWeight: '800' }}>{title}</Text>
+        <Text
+          style={{
+            color: colors.text,
+            fontSize: fontSize.xxl,
+            fontWeight: '800',
+            letterSpacing: letterSpacing.tight,
+          }}
+        >
+          {title}
+        </Text>
         {subtitle ? (
-          <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: 2 }}>{subtitle}</Text>
+          <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: 3 }}>{subtitle}</Text>
         ) : null}
       </View>
       {right}
