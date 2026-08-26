@@ -191,7 +191,17 @@ export default function DailyMenuBuilder() {
           </View>
         </Card>
 
-        <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: '800', marginBottom: spacing.md }}>
+        <Text
+          style={{
+            color: colors.textMuted,
+            fontSize: fontSize.xs,
+            fontWeight: '700',
+            letterSpacing: 0.8,
+            textTransform: 'uppercase',
+            marginBottom: spacing.sm,
+            marginLeft: spacing.xs,
+          }}
+        >
           Published menus
         </Text>
         {sortedMenus.length === 0 ? (
@@ -211,7 +221,7 @@ export default function DailyMenuBuilder() {
                       {formatTime(menu.votingOpensAt)} – {formatTime(menu.votingClosesAt)}
                     </Text>
                   </View>
-                  <Badge label={statusMeta.label} variant={statusMeta.variant} />
+                  <Badge label={statusMeta.label} variant={statusMeta.variant} dot />
                 </View>
                 {status === 'open' ? (
                   <View style={{ marginTop: spacing.sm }}>
