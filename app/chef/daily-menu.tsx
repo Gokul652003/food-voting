@@ -97,12 +97,13 @@ export default function DailyMenuBuilder() {
                   setSlot(s);
                   setSelectedIds(new Set());
                 }}
-                style={[
+                style={({ pressed }) => [
                   styles.chip,
                   {
                     borderRadius: radius.pill,
                     borderColor: colors.border,
                     backgroundColor: slot === s ? colors.primary : colors.surfaceAlt,
+                    opacity: pressed ? 0.7 : 1,
                   },
                 ]}
               >
@@ -127,12 +128,13 @@ export default function DailyMenuBuilder() {
                 <Pressable
                   key={item.id}
                   onPress={() => toggleItem(item.id)}
-                  style={[
+                  style={({ pressed }) => [
                     styles.itemRow,
                     {
                       borderColor: selected ? colors.primary : colors.border,
                       backgroundColor: selected ? colors.primaryMuted : colors.surface,
                       borderRadius: radius.md,
+                      opacity: pressed ? 0.7 : 1,
                     },
                   ]}
                 >
@@ -165,12 +167,13 @@ export default function DailyMenuBuilder() {
               <Pressable
                 key={d.hours}
                 onPress={() => setDurationHours(d.hours)}
-                style={[
+                style={({ pressed }) => [
                   styles.chip,
                   {
                     borderRadius: radius.pill,
                     borderColor: colors.border,
                     backgroundColor: durationHours === d.hours ? colors.primary : colors.surfaceAlt,
+                    opacity: pressed ? 0.7 : 1,
                   },
                 ]}
               >
