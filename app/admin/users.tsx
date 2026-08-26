@@ -116,6 +116,21 @@ export default function Users() {
         {sortedUsers.map((u) => (
           <Card key={u.id} style={{ marginBottom: spacing.sm }}>
             <View style={styles.row}>
+              <View
+                style={[
+                  styles.avatar,
+                  { backgroundColor: colors.primaryMuted, borderRadius: radius.pill, marginRight: spacing.md },
+                ]}
+              >
+                <Text style={{ color: colors.primary, fontSize: fontSize.sm, fontWeight: '800' }}>
+                  {u.name
+                    .split(' ')
+                    .map((p) => p[0])
+                    .slice(0, 2)
+                    .join('')
+                    .toUpperCase()}
+                </Text>
+              </View>
               <View style={{ flex: 1 }}>
                 <View style={styles.nameRow}>
                   <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: '700' }}>{u.name}</Text>
@@ -159,6 +174,12 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   nameRow: {
     flexDirection: 'row',
