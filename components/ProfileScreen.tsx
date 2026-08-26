@@ -6,6 +6,7 @@ import { ScreenHeader } from '@/components/ScreenHeader';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { Divider } from '@/components/ui/Divider';
 import { useTheme } from '@/constants/theme';
 import { useAuth } from '@/context/AuthContext';
 import { ROLE_LABEL } from '@/utils/roles';
@@ -74,7 +75,7 @@ export function ProfileScreen() {
             <Text style={{ color: colors.textMuted, fontSize: fontSize.sm }}>Role</Text>
             <Text style={{ color: colors.text, fontSize: fontSize.sm, fontWeight: '600' }}>{ROLE_LABEL[user.role]}</Text>
           </View>
-          <View style={{ height: StyleSheet.hairlineWidth, backgroundColor: colors.border }} />
+          <Divider />
           <View style={[styles.infoRow, { padding: spacing.lg }]}>
             <Text style={{ color: colors.textMuted, fontSize: fontSize.sm }}>Email</Text>
             <Text style={{ color: colors.text, fontSize: fontSize.sm, fontWeight: '600' }}>{user.email}</Text>
