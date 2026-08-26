@@ -4,6 +4,7 @@ import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput
 
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { Divider } from '@/components/ui/Divider';
 import { useTheme } from '@/constants/theme';
 import { useAuth } from '@/context/AuthContext';
 import { useData } from '@/context/DataContext';
@@ -115,11 +116,11 @@ export default function Login() {
         </Card>
 
         <View style={styles.dividerRow}>
-          <View style={{ flex: 1, height: StyleSheet.hairlineWidth, backgroundColor: colors.border }} />
+          <Divider style={{ flex: 1 }} />
           <Text style={{ color: colors.textMuted, fontSize: fontSize.xs, marginHorizontal: spacing.sm }}>
             OR JUMP IN AS A DEMO ACCOUNT
           </Text>
-          <View style={{ flex: 1, height: StyleSheet.hairlineWidth, backgroundColor: colors.border }} />
+          <Divider style={{ flex: 1 }} />
         </View>
 
         {DEMO_ACCOUNTS.map((acc) => (
