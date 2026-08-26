@@ -18,6 +18,8 @@ const STATUS_BADGE: Record<DailyMenuStatus, { label: string; variant: 'success' 
   closed: { label: 'Final count', variant: 'danger' },
 };
 
+const SLOT_ICON: Record<string, string> = { breakfast: '🌅', lunch: '🍲', snack: '🥨', dinner: '🌙' };
+
 export default function PrepSummary() {
   const { colors, spacing, fontSize } = useTheme();
   const { loading, dailyMenus, menuItems, votes, refetch } = useData();
@@ -57,7 +59,7 @@ export default function PrepSummary() {
               <View key={menu.id} style={{ marginBottom: spacing.xl }}>
                 <View style={styles.sectionHeader}>
                   <Text style={{ color: colors.text, fontSize: fontSize.xl, fontWeight: '800' }}>
-                    {MEAL_SLOT_LABEL[menu.mealSlot]}
+                    {SLOT_ICON[menu.mealSlot]} {MEAL_SLOT_LABEL[menu.mealSlot]}
                   </Text>
                   <Badge label={statusMeta.label} variant={statusMeta.variant} dot />
                 </View>
