@@ -23,6 +23,13 @@ interface Draft {
 
 const BLANK_DRAFT: Draft = { name: '', description: '', category: 'lunch', isCountable: false };
 
+const CATEGORY_ICON: Record<MealSlot, string> = {
+  breakfast: '🌅',
+  lunch: '🍲',
+  snack: '🥨',
+  dinner: '🌙',
+};
+
 export default function Catalog() {
   const { colors, spacing, radius, fontSize } = useTheme();
   const { menuItems, createMenuItem, updateMenuItem, removeMenuItem } = useData();
@@ -171,12 +178,23 @@ export default function Catalog() {
             if (items.length === 0) return null;
             return (
               <View key={slot} style={{ marginBottom: spacing.lg }}>
-                <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: '800', marginBottom: spacing.sm }}>
-                  {MEAL_SLOT_LABEL[slot]}
-                </Text>
+                <View style={styles.slotHeaderRow}>
+                  <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: '800' }}>
+                    {MEAL_SLOT_LABEL[slot]}
+                  </Text>
+                  <Badge label={String(items.length)} />
+                </View>
                 {items.map((item) => (
                   <Card key={item.id} style={{ marginBottom: spacing.sm }}>
                     <View style={styles.itemHeader}>
+                      <View
+                        style={[
+                          styles.itemIcon,
+                          { backgroundColor: colors.surfaceAlt, borderRadius: radius.md, marginRight: spacing.md },
+                        ]}
+                      >
+                        <Text style={{ fontSize: 18 }}>{CATEGORY_ICON[item.category]}</Text>
+                      </View>
                       <View style={{ flex: 1 }}>
                         <View style={styles.nameRow}>
                           <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: '700' }}>{item.name}</Text>
@@ -224,8 +242,20 @@ const styles = StyleSheet.create({
     gap: 8,
     marginTop: 16,
   },
+  slotHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 10,
+  },
   itemHeader: {
     flexDirection: 'row',
+  },
+  itemIcon: {
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   nameRow: {
     flexDirection: 'row',
