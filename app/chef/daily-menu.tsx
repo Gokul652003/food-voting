@@ -19,6 +19,13 @@ const DURATIONS = [
   { label: '4 hours', hours: 4 },
 ];
 
+const SLOT_ICON: Record<MealSlot, string> = {
+  breakfast: '🌅',
+  lunch: '🍲',
+  snack: '🥨',
+  dinner: '🌙',
+};
+
 const STATUS_BADGE: Record<DailyMenuStatus, { label: string; variant: 'success' | 'neutral' | 'danger' }> = {
   open: { label: 'Open', variant: 'success' },
   upcoming: { label: 'Upcoming', variant: 'neutral' },
@@ -100,7 +107,7 @@ export default function DailyMenuBuilder() {
                 ]}
               >
                 <Text style={{ color: slot === s ? colors.primaryText : colors.text, fontSize: fontSize.sm, fontWeight: '600' }}>
-                  {MEAL_SLOT_LABEL[s]}
+                  {SLOT_ICON[s]} {MEAL_SLOT_LABEL[s]}
                 </Text>
               </Pressable>
             ))}
@@ -215,7 +222,7 @@ export default function DailyMenuBuilder() {
                 <View style={styles.menuRow}>
                   <View style={{ flex: 1 }}>
                     <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: '700' }}>
-                      {MEAL_SLOT_LABEL[menu.mealSlot]} · {menu.itemIds.length} items
+                      {SLOT_ICON[menu.mealSlot]} {MEAL_SLOT_LABEL[menu.mealSlot]} · {menu.itemIds.length} items
                     </Text>
                     <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: 2 }}>
                       {formatTime(menu.votingOpensAt)} – {formatTime(menu.votingClosesAt)}
