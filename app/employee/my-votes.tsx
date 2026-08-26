@@ -11,7 +11,7 @@ import { useData } from '@/context/DataContext';
 import { formatDate, formatTime, MEAL_SLOT_LABEL } from '@/utils/menu';
 
 export default function MyVotes() {
-  const { colors, spacing, fontSize } = useTheme();
+  const { colors, spacing, fontSize, radius } = useTheme();
   const { user } = useAuth();
   const { loading, dailyMenus, menuItems, votes, refetch } = useData();
 
@@ -41,6 +41,18 @@ export default function MyVotes() {
           myVotes.map(({ vote, menu, item }) => (
             <Card key={vote.id} style={{ marginBottom: spacing.sm }}>
               <View style={styles.row}>
+                <View
+                  style={[
+                    styles.marker,
+                    {
+                      backgroundColor: vote.choice ? colors.successMuted : colors.dangerMuted,
+                      borderRadius: radius.pill,
+                      marginRight: spacing.md,
+                    },
+                  ]}
+                >
+                  <Text style={{ fontSize: fontSize.md }}>{vote.choice ? '✓' : '✕'}</Text>
+                </View>
                 <View style={{ flex: 1 }}>
                   <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: '700' }}>{item.name}</Text>
                   <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: 2 }}>
@@ -61,5 +73,11 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  marker: {
+    width: 32,
+    height: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
