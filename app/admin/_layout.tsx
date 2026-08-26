@@ -6,7 +6,7 @@ import { tabIcon } from '@/components/TabIcon';
 import { useTheme } from '@/constants/theme';
 
 export default function AdminLayout() {
-  const { colors } = useTheme();
+  const { colors, shadow } = useTheme();
   return (
     <RoleGuard role="admin">
       <Tabs
@@ -14,7 +14,14 @@ export default function AdminLayout() {
           headerShown: false,
           tabBarActiveTintColor: colors.tabActive,
           tabBarInactiveTintColor: colors.tabInactive,
-          tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border },
+          tabBarLabelStyle: { fontSize: 11, fontWeight: '600' },
+          tabBarStyle: {
+            backgroundColor: colors.surface,
+            borderTopColor: colors.border,
+            height: 58,
+            paddingTop: 6,
+            ...shadow.sm,
+          },
         }}
       >
         <Tabs.Screen name="catalog" options={{ title: 'Catalog', tabBarIcon: tabIcon('📖') }} />
