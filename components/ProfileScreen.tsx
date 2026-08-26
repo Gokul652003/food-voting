@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/Card';
 import { Divider } from '@/components/ui/Divider';
 import { useTheme } from '@/constants/theme';
 import { useAuth } from '@/context/AuthContext';
+import { initials } from '@/utils/format';
 import { ROLE_LABEL } from '@/utils/roles';
 
 export function ProfileScreen() {
@@ -17,13 +18,6 @@ export function ProfileScreen() {
   const router = useRouter();
 
   if (!user) return null;
-
-  const initials = user.name
-    .split(' ')
-    .map((p) => p[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase();
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -37,7 +31,7 @@ export function ProfileScreen() {
               { backgroundColor: colors.primary, borderRadius: radius.pill, width: 72, height: 72 },
             ]}
           >
-            <Text style={{ color: colors.primaryText, fontSize: fontSize.xl, fontWeight: '800' }}>{initials}</Text>
+            <Text style={{ color: colors.primaryText, fontSize: fontSize.xl, fontWeight: '800' }}>{initials(user.name)}</Text>
           </View>
           <Text
             style={{
