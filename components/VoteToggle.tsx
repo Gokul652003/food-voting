@@ -16,7 +16,13 @@ export function VoteToggle({ value, onChange, disabled }: VoteToggleProps) {
     <View
       style={[
         styles.row,
-        { backgroundColor: colors.surfaceAlt, borderRadius: radius.pill, padding: spacing.xs / 2 },
+        {
+          backgroundColor: colors.surfaceAlt,
+          borderRadius: radius.pill,
+          padding: spacing.xs / 2,
+          borderWidth: StyleSheet.hairlineWidth,
+          borderColor: colors.border,
+        },
       ]}
     >
       <Pressable
@@ -26,7 +32,7 @@ export function VoteToggle({ value, onChange, disabled }: VoteToggleProps) {
           styles.option,
           {
             borderRadius: radius.pill,
-            paddingVertical: spacing.xs,
+            paddingVertical: spacing.xs + 1,
             paddingHorizontal: spacing.md,
             backgroundColor: value === true ? colors.success : 'transparent',
             opacity: disabled ? 0.5 : 1,
@@ -40,7 +46,7 @@ export function VoteToggle({ value, onChange, disabled }: VoteToggleProps) {
             fontWeight: '700',
           }}
         >
-          Yes
+          {value === true ? '✓ Yes' : 'Yes'}
         </Text>
       </Pressable>
       <Pressable
@@ -50,7 +56,7 @@ export function VoteToggle({ value, onChange, disabled }: VoteToggleProps) {
           styles.option,
           {
             borderRadius: radius.pill,
-            paddingVertical: spacing.xs,
+            paddingVertical: spacing.xs + 1,
             paddingHorizontal: spacing.md,
             backgroundColor: value === false ? colors.danger : 'transparent',
             opacity: disabled ? 0.5 : 1,
@@ -64,7 +70,7 @@ export function VoteToggle({ value, onChange, disabled }: VoteToggleProps) {
             fontWeight: '700',
           }}
         >
-          No
+          {value === false ? '✕ No' : 'No'}
         </Text>
       </Pressable>
     </View>
@@ -74,6 +80,7 @@ export function VoteToggle({ value, onChange, disabled }: VoteToggleProps) {
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
+    alignSelf: 'flex-start',
   },
   option: {
     alignItems: 'center',
