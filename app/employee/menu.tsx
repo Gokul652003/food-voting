@@ -56,9 +56,9 @@ export default function EmployeeMenu() {
                   <Text style={{ color: colors.text, fontSize: fontSize.xl, fontWeight: '800' }}>
                     {MEAL_SLOT_LABEL[menu.mealSlot]}
                   </Text>
-                  <Badge label={statusMeta.label} variant={statusMeta.variant} />
+                  <Badge label={statusMeta.label} variant={statusMeta.variant} dot />
                 </View>
-                <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginBottom: spacing.md }}>
+                <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginBottom: spacing.md, fontWeight: '500' }}>
                   {status === 'open'
                     ? formatCountdown(menu.votingClosesAt, now)
                     : status === 'upcoming'
@@ -95,6 +95,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 4,
+    marginBottom: 6,
   },
 });
