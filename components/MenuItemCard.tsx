@@ -11,23 +11,51 @@ interface MenuItemCardProps {
   action?: React.ReactNode;
 }
 
+const CATEGORY_ICON: Record<MenuItem['category'], string> = {
+  breakfast: '🌅',
+  lunch: '🍲',
+  snack: '🥨',
+  dinner: '🌙',
+};
+
 export function MenuItemCard({ item, action }: MenuItemCardProps) {
-  const { colors, spacing, fontSize } = useTheme();
+  const { colors, spacing, radius, fontSize } = useTheme();
 
   return (
     <Card style={{ marginBottom: spacing.md }}>
       <View style={styles.headerRow}>
+        <View
+          style={[
+            styles.icon,
+            { backgroundColor: colors.surfaceAlt, borderRadius: radius.md, marginRight: spacing.md },
+          ]}
+        >
+          <Text style={{ fontSize: 20 }}>{CATEGORY_ICON[item.category]}</Text>
+        </View>
         <View style={styles.titleColumn}>
           <View style={styles.nameRow}>
             <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: '700' }}>{item.name}</Text>
             <Badge label={item.isCountable ? 'Countable' : 'Staple'} variant={item.isCountable ? 'primary' : 'neutral'} />
           </View>
-          <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: spacing.xs / 2 }}>
-            {item.description}
-          </Text>
+          {item.description ? (
+            <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: spacing.xs / 2 }}>
+              {item.description}
+            </Text>
+          ) : null}
         </View>
       </View>
-      {action ? <View style={{ marginTop: spacing.md }}>{action}</View> : null}
+      {action ? (
+        <View
+          style={{
+            marginTop: spacing.md,
+            paddingTop: spacing.md,
+            borderTopWidth: StyleSheet.hairlineWidth,
+            borderTopColor: colors.border,
+          }}
+        >
+          {action}
+        </View>
+      ) : null}
     </Card>
   );
 }
@@ -35,7 +63,12 @@ export function MenuItemCard({ item, action }: MenuItemCardProps) {
 const styles = StyleSheet.create({
   headerRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+  },
+  icon: {
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   titleColumn: {
     flex: 1,
