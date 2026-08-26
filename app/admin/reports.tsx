@@ -85,6 +85,16 @@ export default function Reports() {
           <EmptyState title="No votes yet" subtitle="Popularity ranks will appear once employees start voting." />
         ) : (
           <Card>
+            <View style={styles.legendRow}>
+              <View style={styles.legendItem}>
+                <View style={[styles.legendSwatch, { backgroundColor: colors.primary, borderRadius: radius.pill }]} />
+                <Text style={{ color: colors.textMuted, fontSize: fontSize.xs }}>Countable</Text>
+              </View>
+              <View style={styles.legendItem}>
+                <View style={[styles.legendSwatch, { backgroundColor: colors.success, borderRadius: radius.pill }]} />
+                <Text style={{ color: colors.textMuted, fontSize: fontSize.xs }}>Staple</Text>
+              </View>
+            </View>
             {popularity.rows.map(({ item, count }) => (
               <View key={item.id} style={{ marginBottom: spacing.md }}>
                 <View style={styles.barLabelRow}>
@@ -155,6 +165,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  legendRow: {
+    flexDirection: 'row',
+    gap: 16,
+    marginBottom: 16,
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  legendSwatch: {
+    width: 8,
+    height: 8,
   },
   barLabelRow: {
     flexDirection: 'row',
