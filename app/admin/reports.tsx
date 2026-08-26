@@ -52,19 +52,33 @@ export default function Reports() {
       <ScrollView contentContainerStyle={{ padding: spacing.lg, paddingBottom: spacing.xxl }}>
         <View style={styles.statGrid}>
           {[
-            { label: 'Staff', value: stats.staffCount },
-            { label: 'Catalog items', value: stats.catalogCount },
-            { label: 'Countable items', value: stats.countableCount },
-            { label: 'Votes cast', value: stats.votesCast },
+            { label: 'Staff', value: stats.staffCount, icon: '🧑‍🤝‍🧑' },
+            { label: 'Catalog items', value: stats.catalogCount, icon: '📖' },
+            { label: 'Countable items', value: stats.countableCount, icon: '🎯' },
+            { label: 'Votes cast', value: stats.votesCast, icon: '🗳️' },
           ].map((s) => (
             <Card key={s.label} style={styles.statCard}>
-              <Text style={{ color: colors.primary, fontSize: fontSize.xxl, fontWeight: '800' }}>{s.value}</Text>
+              <View style={styles.statTop}>
+                <Text style={{ color: colors.primary, fontSize: fontSize.xxl, fontWeight: '800' }}>{s.value}</Text>
+                <Text style={{ fontSize: fontSize.lg }}>{s.icon}</Text>
+              </View>
               <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: 2 }}>{s.label}</Text>
             </Card>
           ))}
         </View>
 
-        <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: '800', marginTop: spacing.xl, marginBottom: spacing.md }}>
+        <Text
+          style={{
+            color: colors.textMuted,
+            fontSize: fontSize.xs,
+            fontWeight: '700',
+            letterSpacing: 0.8,
+            textTransform: 'uppercase',
+            marginTop: spacing.xl,
+            marginBottom: spacing.sm,
+            marginLeft: spacing.xs,
+          }}
+        >
           Most popular items
         </Text>
         {popularity.rows.length === 0 ? (
@@ -94,7 +108,18 @@ export default function Reports() {
           </Card>
         )}
 
-        <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: '800', marginTop: spacing.xl, marginBottom: spacing.md }}>
+        <Text
+          style={{
+            color: colors.textMuted,
+            fontSize: fontSize.xs,
+            fontWeight: '700',
+            letterSpacing: 0.8,
+            textTransform: 'uppercase',
+            marginTop: spacing.xl,
+            marginBottom: spacing.sm,
+            marginLeft: spacing.xs,
+          }}
+        >
           Recent participation
         </Text>
         {participation.length === 0 ? (
@@ -125,6 +150,11 @@ const styles = StyleSheet.create({
   statCard: {
     flexBasis: '47%',
     flexGrow: 1,
+  },
+  statTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   barLabelRow: {
     flexDirection: 'row',
