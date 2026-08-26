@@ -60,7 +60,11 @@ export default function Users() {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
-      <ScreenHeader title="Staff" subtitle="Employees, chefs & admins" right={!draft ? <Button label="+ Add" onPress={startAdd} /> : undefined} />
+      <ScreenHeader
+        title="Staff"
+        subtitle="Employees, chefs & admins"
+        right={!draft ? <Button label="+ Add" size="sm" onPress={startAdd} /> : undefined}
+      />
       <ScrollView contentContainerStyle={{ padding: spacing.lg, paddingBottom: spacing.xxl }}>
         {draft ? (
           <Card style={{ marginBottom: spacing.xl }}>
