@@ -6,7 +6,7 @@ import { tabIcon } from '@/components/TabIcon';
 import { useTheme } from '@/constants/theme';
 
 export default function ChefLayout() {
-  const { colors } = useTheme();
+  const { colors, shadow } = useTheme();
   return (
     <RoleGuard role="chef">
       <Tabs
@@ -14,7 +14,14 @@ export default function ChefLayout() {
           headerShown: false,
           tabBarActiveTintColor: colors.tabActive,
           tabBarInactiveTintColor: colors.tabInactive,
-          tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border },
+          tabBarLabelStyle: { fontSize: 11, fontWeight: '600' },
+          tabBarStyle: {
+            backgroundColor: colors.surface,
+            borderTopColor: colors.border,
+            height: 58,
+            paddingTop: 6,
+            ...shadow.sm,
+          },
         }}
       >
         <Tabs.Screen name="prep" options={{ title: 'Prep Summary', tabBarIcon: tabIcon('🔥') }} />
