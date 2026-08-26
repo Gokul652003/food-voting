@@ -9,6 +9,7 @@ import { useTheme } from '@/constants/theme';
 import { useAuth } from '@/context/AuthContext';
 import { useData } from '@/context/DataContext';
 import type { Role, User } from '@/types';
+import { initials } from '@/utils/format';
 import { ROLE_LABEL } from '@/utils/roles';
 
 const ROLES: Role[] = ['employee', 'chef', 'admin'];
@@ -134,14 +135,7 @@ export default function Users() {
                   { backgroundColor: colors.primaryMuted, borderRadius: radius.pill, marginRight: spacing.md },
                 ]}
               >
-                <Text style={{ color: colors.primary, fontSize: fontSize.sm, fontWeight: '800' }}>
-                  {u.name
-                    .split(' ')
-                    .map((p) => p[0])
-                    .slice(0, 2)
-                    .join('')
-                    .toUpperCase()}
-                </Text>
+                <Text style={{ color: colors.primary, fontSize: fontSize.sm, fontWeight: '800' }}>{initials(u.name)}</Text>
               </View>
               <View style={{ flex: 1 }}>
                 <View style={styles.nameRow}>
