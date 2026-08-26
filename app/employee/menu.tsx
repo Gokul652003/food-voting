@@ -19,6 +19,8 @@ const STATUS_BADGE: Record<DailyMenuStatus, { label: string; variant: 'success' 
   closed: { label: 'Voting closed', variant: 'danger' },
 };
 
+const SLOT_ICON: Record<string, string> = { breakfast: '🌅', lunch: '🍲', snack: '🥨', dinner: '🌙' };
+
 export default function EmployeeMenu() {
   const { colors, spacing, fontSize } = useTheme();
   const { user } = useAuth();
@@ -54,7 +56,7 @@ export default function EmployeeMenu() {
               <View key={menu.id} style={{ marginBottom: spacing.xl }}>
                 <View style={styles.sectionHeader}>
                   <Text style={{ color: colors.text, fontSize: fontSize.xl, fontWeight: '800' }}>
-                    {MEAL_SLOT_LABEL[menu.mealSlot]}
+                    {SLOT_ICON[menu.mealSlot]} {MEAL_SLOT_LABEL[menu.mealSlot]}
                   </Text>
                   <Badge label={statusMeta.label} variant={statusMeta.variant} dot />
                 </View>
