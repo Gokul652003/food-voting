@@ -17,7 +17,7 @@ const DEMO_ACCOUNTS = [
 ];
 
 export default function Login() {
-  const { colors, spacing, radius, fontSize, shadow, letterSpacing } = useTheme();
+  const { colors, spacing, radius, fontSize, shadow, letterSpacing, formStyles } = useTheme();
   const { user, login } = useAuth();
   const { loading: dataLoading } = useData();
   const [email, setEmail] = useState('');
@@ -85,7 +85,7 @@ export default function Login() {
             autoCapitalize="none"
             keyboardType="email-address"
             style={[
-              styles.input,
+              formStyles.input,
               {
                 borderColor: colors.border,
                 backgroundColor: colors.surfaceAlt,
@@ -103,7 +103,7 @@ export default function Login() {
             placeholderTextColor={colors.textMuted}
             secureTextEntry
             style={[
-              styles.input,
+              formStyles.input,
               { borderColor: colors.border, backgroundColor: colors.surfaceAlt, color: colors.text, borderRadius: radius.sm },
             ]}
           />
@@ -153,12 +153,6 @@ const styles = StyleSheet.create({
     height: 56,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  input: {
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 15,
   },
   dividerRow: {
     flexDirection: 'row',
