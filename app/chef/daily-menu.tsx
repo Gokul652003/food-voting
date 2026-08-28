@@ -26,7 +26,7 @@ const STATUS_BADGE: Record<DailyMenuStatus, { label: string; variant: 'success' 
 };
 
 export default function DailyMenuBuilder() {
-  const { colors, spacing, radius, fontSize, formStyles } = useTheme();
+  const { colors, spacing, radius, fontSize, letterSpacing, formStyles } = useTheme();
   const { dailyMenus, menuItems, createDailyMenu, updateDailyMenu } = useData();
   const now = useNow();
 
@@ -203,7 +203,7 @@ export default function DailyMenuBuilder() {
             color: colors.textMuted,
             fontSize: fontSize.xs,
             fontWeight: '700',
-            letterSpacing: 0.8,
+            letterSpacing: letterSpacing.wider,
             textTransform: 'uppercase',
             marginBottom: spacing.sm,
             marginLeft: spacing.xs,
