@@ -1,6 +1,6 @@
 import { buildSeedDailyMenus, buildSeedVotes, SEED_MENU_ITEMS, SEED_USERS } from '@/data/seed';
 import { readCollection, writeCollection } from '@/services/storage';
-import type { DailyMenu, MenuItem, Role, User, Vote } from '@/types';
+import type { DailyMenu, MenuItem, User, Vote } from '@/types';
 
 /**
  * Mock service layer. Every function is async and shaped like it already
@@ -23,7 +23,7 @@ export const usersApi = {
     await delay();
     return readCollection<User[]>('users', SEED_USERS);
   },
-  async create(input: { name: string; email: string; role: Role }): Promise<User> {
+  async create(input: Omit<User, 'id'>): Promise<User> {
     await delay();
     const users = await readCollection<User[]>('users', SEED_USERS);
     const user: User = { id: makeId('u'), ...input };
