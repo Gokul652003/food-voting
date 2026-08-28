@@ -114,12 +114,13 @@ export default function Catalog() {
                 <Pressable
                   key={s}
                   onPress={() => setDraft((d) => (d ? { ...d, category: s } : d))}
-                  style={[
+                  style={({ pressed }) => [
                     styles.chip,
                     {
                       borderRadius: radius.pill,
                       borderColor: colors.border,
                       backgroundColor: draft.category === s ? colors.primary : colors.surfaceAlt,
+                      opacity: pressed ? 0.7 : 1,
                     },
                   ]}
                 >
@@ -136,12 +137,13 @@ export default function Catalog() {
             <View style={styles.chipRow}>
               <Pressable
                 onPress={() => setDraft((d) => (d ? { ...d, isCountable: true } : d))}
-                style={[
+                style={({ pressed }) => [
                   styles.chip,
                   {
                     borderRadius: radius.pill,
                     borderColor: colors.border,
                     backgroundColor: draft.isCountable ? colors.primary : colors.surfaceAlt,
+                    opacity: pressed ? 0.7 : 1,
                   },
                 ]}
               >
@@ -151,12 +153,13 @@ export default function Catalog() {
               </Pressable>
               <Pressable
                 onPress={() => setDraft((d) => (d ? { ...d, isCountable: false } : d))}
-                style={[
+                style={({ pressed }) => [
                   styles.chip,
                   {
                     borderRadius: radius.pill,
                     borderColor: colors.border,
                     backgroundColor: !draft.isCountable ? colors.primary : colors.surfaceAlt,
+                    opacity: pressed ? 0.7 : 1,
                   },
                 ]}
               >
