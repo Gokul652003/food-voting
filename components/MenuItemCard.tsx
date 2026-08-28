@@ -5,18 +5,12 @@ import { Badge } from '@/components/ui/Badge';
 import { Card } from '@/components/ui/Card';
 import { useTheme } from '@/constants/theme';
 import type { MenuItem } from '@/types';
+import { MEAL_SLOT_ICON } from '@/utils/menu';
 
 interface MenuItemCardProps {
   item: MenuItem;
   action?: React.ReactNode;
 }
-
-const CATEGORY_ICON: Record<MenuItem['category'], string> = {
-  breakfast: '🌅',
-  lunch: '🍲',
-  snack: '🥨',
-  dinner: '🌙',
-};
 
 export function MenuItemCard({ item, action }: MenuItemCardProps) {
   const { colors, spacing, radius, fontSize } = useTheme();
@@ -30,7 +24,7 @@ export function MenuItemCard({ item, action }: MenuItemCardProps) {
             { backgroundColor: colors.surfaceAlt, borderRadius: radius.md, marginRight: spacing.md },
           ]}
         >
-          <Text style={{ fontSize: 20 }}>{CATEGORY_ICON[item.category]}</Text>
+          <Text style={{ fontSize: 20 }}>{MEAL_SLOT_ICON[item.category]}</Text>
         </View>
         <View style={styles.titleColumn}>
           <View style={styles.nameRow}>
