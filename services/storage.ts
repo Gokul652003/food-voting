@@ -11,6 +11,8 @@ export async function readCollection<T>(key: string, seed: T): Promise<T> {
   try {
     return JSON.parse(raw) as T;
   } catch {
+    // Corrupted entry — reset it to the seed so future reads don't keep failing to parse it.
+    await AsyncStorage.setItem(PREFIX + key, JSON.stringify(seed));
     return seed;
   }
 }
