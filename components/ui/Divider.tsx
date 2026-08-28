@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 import { useTheme } from '@/constants/theme';
 
 interface DividerProps {
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
 }
 
 export function Divider({ style }: DividerProps) {
