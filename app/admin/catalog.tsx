@@ -24,7 +24,7 @@ interface Draft {
 const BLANK_DRAFT: Draft = { name: '', description: '', category: 'lunch', isCountable: false };
 
 export default function Catalog() {
-  const { colors, spacing, radius, fontSize } = useTheme();
+  const { colors, spacing, radius, fontSize, formStyles } = useTheme();
   const { menuItems, createMenuItem, updateMenuItem, removeMenuItem } = useData();
   const [draft, setDraft] = useState<Draft | null>(null);
   const [saving, setSaving] = useState(false);
@@ -88,7 +88,7 @@ export default function Catalog() {
               placeholder="Item name"
               placeholderTextColor={colors.textMuted}
               style={[
-                styles.input,
+                formStyles.input,
                 { borderColor: colors.border, backgroundColor: colors.surfaceAlt, color: colors.text, borderRadius: radius.sm },
               ]}
             />
@@ -101,7 +101,7 @@ export default function Catalog() {
               placeholder="Short description"
               placeholderTextColor={colors.textMuted}
               style={[
-                styles.input,
+                formStyles.input,
                 { borderColor: colors.border, backgroundColor: colors.surfaceAlt, color: colors.text, borderRadius: radius.sm },
               ]}
             />
@@ -227,12 +227,6 @@ export default function Catalog() {
 }
 
 const styles = StyleSheet.create({
-  input: {
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 15,
-  },
   chipRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
