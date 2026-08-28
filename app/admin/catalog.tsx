@@ -109,13 +109,13 @@ export default function Catalog() {
             <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: spacing.md, marginBottom: spacing.xs }}>
               Meal slot
             </Text>
-            <View style={styles.chipRow}>
+            <View style={formStyles.chipRow}>
               {MEAL_SLOTS.map((s) => (
                 <Pressable
                   key={s}
                   onPress={() => setDraft((d) => (d ? { ...d, category: s } : d))}
                   style={({ pressed }) => [
-                    styles.chip,
+                    formStyles.chip,
                     {
                       borderRadius: radius.pill,
                       borderColor: colors.border,
@@ -134,11 +134,11 @@ export default function Catalog() {
             <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: spacing.md, marginBottom: spacing.xs }}>
               Does the chef need an exact headcount for this item?
             </Text>
-            <View style={styles.chipRow}>
+            <View style={formStyles.chipRow}>
               <Pressable
                 onPress={() => setDraft((d) => (d ? { ...d, isCountable: true } : d))}
                 style={({ pressed }) => [
-                  styles.chip,
+                  formStyles.chip,
                   {
                     borderRadius: radius.pill,
                     borderColor: colors.border,
@@ -154,7 +154,7 @@ export default function Catalog() {
               <Pressable
                 onPress={() => setDraft((d) => (d ? { ...d, isCountable: false } : d))}
                 style={({ pressed }) => [
-                  styles.chip,
+                  formStyles.chip,
                   {
                     borderRadius: radius.pill,
                     borderColor: colors.border,
@@ -227,16 +227,6 @@ export default function Catalog() {
 }
 
 const styles = StyleSheet.create({
-  chipRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  chip: {
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-  },
   formActions: {
     flexDirection: 'row',
     gap: 8,
