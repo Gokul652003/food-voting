@@ -12,7 +12,7 @@ import type { DailyMenu, MenuItem, Role, User, Vote } from '@/types';
 const LATENCY_MS = 250;
 const delay = () => new Promise((resolve) => setTimeout(resolve, LATENCY_MS));
 
-let nextId = 1;
+let nextId = 0;
 function makeId(prefix: string): string {
   nextId += 1;
   return `${prefix}-${Date.now()}-${nextId}`;
