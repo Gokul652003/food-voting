@@ -9,7 +9,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { useTheme } from '@/constants/theme';
 import { useData } from '@/context/DataContext';
 import type { DailyMenuStatus, MealSlot } from '@/types';
-import { computeStatus, formatTime, MEAL_SLOT_LABEL } from '@/utils/menu';
+import { computeStatus, formatTime, MEAL_SLOT_ICON, MEAL_SLOT_LABEL } from '@/utils/menu';
 import { useNow } from '@/utils/useNow';
 
 const MEAL_SLOTS: MealSlot[] = ['breakfast', 'lunch', 'snack', 'dinner'];
@@ -18,13 +18,6 @@ const DURATIONS = [
   { label: '2 hours', hours: 2 },
   { label: '4 hours', hours: 4 },
 ];
-
-const SLOT_ICON: Record<MealSlot, string> = {
-  breakfast: '🌅',
-  lunch: '🍲',
-  snack: '🥨',
-  dinner: '🌙',
-};
 
 const STATUS_BADGE: Record<DailyMenuStatus, { label: string; variant: 'success' | 'neutral' | 'danger' }> = {
   open: { label: 'Open', variant: 'success' },
@@ -108,7 +101,7 @@ export default function DailyMenuBuilder() {
                 ]}
               >
                 <Text style={{ color: slot === s ? colors.primaryText : colors.text, fontSize: fontSize.sm, fontWeight: '600' }}>
-                  {SLOT_ICON[s]} {MEAL_SLOT_LABEL[s]}
+                  {MEAL_SLOT_ICON[s]} {MEAL_SLOT_LABEL[s]}
                 </Text>
               </Pressable>
             ))}
@@ -225,7 +218,7 @@ export default function DailyMenuBuilder() {
                 <View style={styles.menuRow}>
                   <View style={{ flex: 1 }}>
                     <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: '700' }}>
-                      {SLOT_ICON[menu.mealSlot]} {MEAL_SLOT_LABEL[menu.mealSlot]} · {menu.itemIds.length} items
+                      {MEAL_SLOT_ICON[menu.mealSlot]} {MEAL_SLOT_LABEL[menu.mealSlot]} · {menu.itemIds.length} items
                     </Text>
                     <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: 2 }}>
                       {formatTime(menu.votingOpensAt)} – {formatTime(menu.votingClosesAt)}
