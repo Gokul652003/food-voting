@@ -8,6 +8,9 @@ export function tabIcon(emoji: string) {
     <View
       style={[
         styles.wrap,
+        // react-navigation always passes tabBarActive/InactiveTintColor through as a
+        // hex string, so appending a hex alpha suffix here is safe despite the wider
+        // ColorValue type (which also covers platform color objects and numbers).
         { backgroundColor: focused ? `${color as string}1A` : 'transparent', borderRadius: radius.md },
       ]}
     >

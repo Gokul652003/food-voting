@@ -9,7 +9,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { useTheme } from '@/constants/theme';
 import { useData } from '@/context/DataContext';
 import type { MealSlot, MenuItem } from '@/types';
-import { MEAL_SLOT_LABEL } from '@/utils/menu';
+import { MEAL_SLOT_ICON, MEAL_SLOT_LABEL } from '@/utils/menu';
 
 const MEAL_SLOTS: MealSlot[] = ['breakfast', 'lunch', 'snack', 'dinner'];
 
@@ -23,15 +23,8 @@ interface Draft {
 
 const BLANK_DRAFT: Draft = { name: '', description: '', category: 'lunch', isCountable: false };
 
-const CATEGORY_ICON: Record<MealSlot, string> = {
-  breakfast: '🌅',
-  lunch: '🍲',
-  snack: '🥨',
-  dinner: '🌙',
-};
-
 export default function Catalog() {
-  const { colors, spacing, radius, fontSize } = useTheme();
+  const { colors, spacing, radius, fontSize, formStyles } = useTheme();
   const { menuItems, createMenuItem, updateMenuItem, removeMenuItem } = useData();
   const [draft, setDraft] = useState<Draft | null>(null);
   const [saving, setSaving] = useState(false);
@@ -95,7 +88,7 @@ export default function Catalog() {
               placeholder="Item name"
               placeholderTextColor={colors.textMuted}
               style={[
-                styles.input,
+                formStyles.input,
                 { borderColor: colors.border, backgroundColor: colors.surfaceAlt, color: colors.text, borderRadius: radius.sm },
               ]}
             />
@@ -108,7 +101,7 @@ export default function Catalog() {
               placeholder="Short description"
               placeholderTextColor={colors.textMuted}
               style={[
-                styles.input,
+                formStyles.input,
                 { borderColor: colors.border, backgroundColor: colors.surfaceAlt, color: colors.text, borderRadius: radius.sm },
               ]}
             />
@@ -116,17 +109,18 @@ export default function Catalog() {
             <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: spacing.md, marginBottom: spacing.xs }}>
               Meal slot
             </Text>
-            <View style={styles.chipRow}>
+            <View style={formStyles.chipRow}>
               {MEAL_SLOTS.map((s) => (
                 <Pressable
                   key={s}
                   onPress={() => setDraft((d) => (d ? { ...d, category: s } : d))}
-                  style={[
-                    styles.chip,
+                  style={({ pressed }) => [
+                    formStyles.chip,
                     {
                       borderRadius: radius.pill,
                       borderColor: colors.border,
                       backgroundColor: draft.category === s ? colors.primary : colors.surfaceAlt,
+                      opacity: pressed ? 0.7 : 1,
                     },
                   ]}
                 >
@@ -140,15 +134,16 @@ export default function Catalog() {
             <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: spacing.md, marginBottom: spacing.xs }}>
               Does the chef need an exact headcount for this item?
             </Text>
-            <View style={styles.chipRow}>
+            <View style={formStyles.chipRow}>
               <Pressable
                 onPress={() => setDraft((d) => (d ? { ...d, isCountable: true } : d))}
-                style={[
-                  styles.chip,
+                style={({ pressed }) => [
+                  formStyles.chip,
                   {
                     borderRadius: radius.pill,
                     borderColor: colors.border,
                     backgroundColor: draft.isCountable ? colors.primary : colors.surfaceAlt,
+                    opacity: pressed ? 0.7 : 1,
                   },
                 ]}
               >
@@ -158,12 +153,13 @@ export default function Catalog() {
               </Pressable>
               <Pressable
                 onPress={() => setDraft((d) => (d ? { ...d, isCountable: false } : d))}
-                style={[
-                  styles.chip,
+                style={({ pressed }) => [
+                  formStyles.chip,
                   {
                     borderRadius: radius.pill,
                     borderColor: colors.border,
                     backgroundColor: !draft.isCountable ? colors.primary : colors.surfaceAlt,
+                    opacity: pressed ? 0.7 : 1,
                   },
                 ]}
               >
@@ -203,7 +199,7 @@ export default function Catalog() {
                           { backgroundColor: colors.surfaceAlt, borderRadius: radius.md, marginRight: spacing.md },
                         ]}
                       >
-                        <Text style={{ fontSize: 18 }}>{CATEGORY_ICON[item.category]}</Text>
+                        <Text style={{ fontSize: 18 }}>{MEAL_SLOT_ICON[item.category]}</Text>
                       </View>
                       <View style={{ flex: 1 }}>
                         <View style={styles.nameRow}>
@@ -231,22 +227,6 @@ export default function Catalog() {
 }
 
 const styles = StyleSheet.create({
-  input: {
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 15,
-  },
-  chipRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  chip: {
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-  },
   formActions: {
     flexDirection: 'row',
     gap: 8,

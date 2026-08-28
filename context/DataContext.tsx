@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { dailyMenusApi, menuItemsApi, usersApi, votesApi } from '@/services/api';
-import type { DailyMenu, MenuItem, Role, User, Vote } from '@/types';
+import type { DailyMenu, MenuItem, User, Vote } from '@/types';
 
 interface DataContextValue {
   loading: boolean;
@@ -11,7 +11,7 @@ interface DataContextValue {
   votes: Vote[];
   refetch: () => Promise<void>;
 
-  createUser: (input: { name: string; email: string; role: Role }) => Promise<User>;
+  createUser: (input: Omit<User, 'id'>) => Promise<User>;
   updateUser: (id: string, patch: Partial<Omit<User, 'id'>>) => Promise<User>;
   removeUser: (id: string) => Promise<void>;
 
@@ -22,7 +22,7 @@ interface DataContextValue {
   createDailyMenu: (input: Omit<DailyMenu, 'id'>) => Promise<DailyMenu>;
   updateDailyMenu: (id: string, patch: Partial<Omit<DailyMenu, 'id'>>) => Promise<DailyMenu>;
 
-  castVote: (input: { userId: string; dailyMenuId: string; menuItemId: string; choice: boolean }) => Promise<Vote>;
+  castVote: (input: Omit<Vote, 'id' | 'createdAt'>) => Promise<Vote>;
 }
 
 const DataContext = createContext<DataContextValue | null>(null);
@@ -99,6 +99,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
   const castVote: DataContextValue['castVote'] = useCallback(async (input) => {
     const vote = await votesApi.castVote(input);
+    // votesApi.castVote itself may have updated an existing vote or inserted a
+    // new one; the local cache has to mirror whichever it did.
     setVotes((prev) => {
       const exists = prev.some((v) => v.id === vote.id);
       return exists ? prev.map((v) => (v.id === vote.id ? vote : v)) : [...prev, vote];

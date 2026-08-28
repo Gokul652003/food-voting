@@ -24,7 +24,7 @@ interface Draft {
 const BLANK_DRAFT: Draft = { name: '', email: '', role: 'employee' };
 
 export default function Users() {
-  const { colors, spacing, radius, fontSize } = useTheme();
+  const { colors, spacing, radius, fontSize, formStyles } = useTheme();
   const { user: me } = useAuth();
   const { users, createUser, updateUser, removeUser } = useData();
   const [draft, setDraft] = useState<Draft | null>(null);
@@ -79,7 +79,7 @@ export default function Users() {
               placeholder="Full name"
               placeholderTextColor={colors.textMuted}
               style={[
-                styles.input,
+                formStyles.input,
                 { borderColor: colors.border, backgroundColor: colors.surfaceAlt, color: colors.text, borderRadius: radius.sm },
               ]}
             />
@@ -92,23 +92,24 @@ export default function Users() {
               autoCapitalize="none"
               keyboardType="email-address"
               style={[
-                styles.input,
+                formStyles.input,
                 { borderColor: colors.border, backgroundColor: colors.surfaceAlt, color: colors.text, borderRadius: radius.sm },
               ]}
             />
 
             <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: spacing.md, marginBottom: spacing.xs }}>Role</Text>
-            <View style={styles.chipRow}>
+            <View style={formStyles.chipRow}>
               {ROLES.map((r) => (
                 <Pressable
                   key={r}
                   onPress={() => setDraft((d) => (d ? { ...d, role: r } : d))}
-                  style={[
-                    styles.chip,
+                  style={({ pressed }) => [
+                    formStyles.chip,
                     {
                       borderRadius: radius.pill,
                       borderColor: colors.border,
                       backgroundColor: draft.role === r ? colors.primary : colors.surfaceAlt,
+                      opacity: pressed ? 0.7 : 1,
                     },
                   ]}
                 >
@@ -157,22 +158,6 @@ export default function Users() {
 }
 
 const styles = StyleSheet.create({
-  input: {
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 15,
-  },
-  chipRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  chip: {
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-  },
   formActions: {
     flexDirection: 'row',
     gap: 8,

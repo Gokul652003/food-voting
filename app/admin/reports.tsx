@@ -8,7 +8,7 @@ import { useTheme } from '@/constants/theme';
 import { useData } from '@/context/DataContext';
 
 export default function Reports() {
-  const { colors, spacing, radius, fontSize } = useTheme();
+  const { colors, spacing, radius, fontSize, letterSpacing } = useTheme();
   const { users, menuItems, dailyMenus, votes } = useData();
 
   const stats = useMemo(() => {
@@ -72,7 +72,7 @@ export default function Reports() {
             color: colors.textMuted,
             fontSize: fontSize.xs,
             fontWeight: '700',
-            letterSpacing: 0.8,
+            letterSpacing: letterSpacing.wider,
             textTransform: 'uppercase',
             marginTop: spacing.xl,
             marginBottom: spacing.sm,
@@ -123,7 +123,7 @@ export default function Reports() {
             color: colors.textMuted,
             fontSize: fontSize.xs,
             fontWeight: '700',
-            letterSpacing: 0.8,
+            letterSpacing: letterSpacing.wider,
             textTransform: 'uppercase',
             marginTop: spacing.xl,
             marginBottom: spacing.sm,

@@ -1,4 +1,4 @@
-import type { DailyMenu, DailyMenuStatus } from '@/types';
+import type { DailyMenu, DailyMenuStatus, MealSlot } from '@/types';
 
 /** Live status derived from the voting window, so it's always correct even
  *  though the stored `status` field only reflects the value at creation time. */
@@ -29,9 +29,16 @@ export function formatCountdown(closesAtIso: string, now: Date = new Date()): st
   return `Closes in ${minutes}m`;
 }
 
-export const MEAL_SLOT_LABEL: Record<string, string> = {
+export const MEAL_SLOT_LABEL: Record<MealSlot, string> = {
   breakfast: 'Breakfast',
   lunch: 'Lunch',
   snack: 'Snack',
   dinner: 'Dinner',
+};
+
+export const MEAL_SLOT_ICON: Record<MealSlot, string> = {
+  breakfast: '🌅',
+  lunch: '🍲',
+  snack: '🥨',
+  dinner: '🌙',
 };

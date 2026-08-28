@@ -46,6 +46,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
+    // Waits on dataLoading too: resolving a restored session id against `users`
+    // before that list has loaded would look identical to "no such user."
     <AuthContext.Provider value={{ user, loading: dataLoading || restoring, login, logout }}>
       {children}
     </AuthContext.Provider>

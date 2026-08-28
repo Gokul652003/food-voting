@@ -9,7 +9,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { useTheme } from '@/constants/theme';
 import { useData } from '@/context/DataContext';
 import type { DailyMenuStatus, MealSlot } from '@/types';
-import { computeStatus, formatTime, MEAL_SLOT_LABEL } from '@/utils/menu';
+import { computeStatus, formatTime, MEAL_SLOT_ICON, MEAL_SLOT_LABEL } from '@/utils/menu';
 import { useNow } from '@/utils/useNow';
 
 const MEAL_SLOTS: MealSlot[] = ['breakfast', 'lunch', 'snack', 'dinner'];
@@ -19,13 +19,6 @@ const DURATIONS = [
   { label: '4 hours', hours: 4 },
 ];
 
-const SLOT_ICON: Record<MealSlot, string> = {
-  breakfast: '🌅',
-  lunch: '🍲',
-  snack: '🥨',
-  dinner: '🌙',
-};
-
 const STATUS_BADGE: Record<DailyMenuStatus, { label: string; variant: 'success' | 'neutral' | 'danger' }> = {
   open: { label: 'Open', variant: 'success' },
   upcoming: { label: 'Upcoming', variant: 'neutral' },
@@ -33,7 +26,7 @@ const STATUS_BADGE: Record<DailyMenuStatus, { label: string; variant: 'success' 
 };
 
 export default function DailyMenuBuilder() {
-  const { colors, spacing, radius, fontSize } = useTheme();
+  const { colors, spacing, radius, fontSize, letterSpacing, formStyles } = useTheme();
   const { dailyMenus, menuItems, createDailyMenu, updateDailyMenu } = useData();
   const now = useNow();
 
@@ -47,7 +40,11 @@ export default function DailyMenuBuilder() {
   const toggleItem = (id: string) => {
     setSelectedIds((prev) => {
       const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
       return next;
     });
   };
@@ -64,6 +61,8 @@ export default function DailyMenuBuilder() {
         itemIds: Array.from(selectedIds),
         votingOpensAt: opens.toISOString(),
         votingClosesAt: closes.toISOString(),
+        // Just a stored fallback — every screen derives the real, live status
+        // from the voting window via computeStatus() instead of reading this.
         status: 'open',
       });
       setSelectedIds(new Set());
@@ -89,7 +88,7 @@ export default function DailyMenuBuilder() {
           </Text>
 
           <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginBottom: spacing.xs }}>Meal slot</Text>
-          <View style={styles.chipRow}>
+          <View style={formStyles.chipRow}>
             {MEAL_SLOTS.map((s) => (
               <Pressable
                 key={s}
@@ -98,7 +97,7 @@ export default function DailyMenuBuilder() {
                   setSelectedIds(new Set());
                 }}
                 style={({ pressed }) => [
-                  styles.chip,
+                  formStyles.chip,
                   {
                     borderRadius: radius.pill,
                     borderColor: colors.border,
@@ -108,7 +107,7 @@ export default function DailyMenuBuilder() {
                 ]}
               >
                 <Text style={{ color: slot === s ? colors.primaryText : colors.text, fontSize: fontSize.sm, fontWeight: '600' }}>
-                  {SLOT_ICON[s]} {MEAL_SLOT_LABEL[s]}
+                  {MEAL_SLOT_ICON[s]} {MEAL_SLOT_LABEL[s]}
                 </Text>
               </Pressable>
             ))}
@@ -162,13 +161,13 @@ export default function DailyMenuBuilder() {
           <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: spacing.md, marginBottom: spacing.xs }}>
             Voting stays open for
           </Text>
-          <View style={styles.chipRow}>
+          <View style={formStyles.chipRow}>
             {DURATIONS.map((d) => (
               <Pressable
                 key={d.hours}
                 onPress={() => setDurationHours(d.hours)}
                 style={({ pressed }) => [
-                  styles.chip,
+                  formStyles.chip,
                   {
                     borderRadius: radius.pill,
                     borderColor: colors.border,
@@ -206,7 +205,7 @@ export default function DailyMenuBuilder() {
             color: colors.textMuted,
             fontSize: fontSize.xs,
             fontWeight: '700',
-            letterSpacing: 0.8,
+            letterSpacing: letterSpacing.wider,
             textTransform: 'uppercase',
             marginBottom: spacing.sm,
             marginLeft: spacing.xs,
@@ -225,7 +224,7 @@ export default function DailyMenuBuilder() {
                 <View style={styles.menuRow}>
                   <View style={{ flex: 1 }}>
                     <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: '700' }}>
-                      {SLOT_ICON[menu.mealSlot]} {MEAL_SLOT_LABEL[menu.mealSlot]} · {menu.itemIds.length} items
+                      {MEAL_SLOT_ICON[menu.mealSlot]} {MEAL_SLOT_LABEL[menu.mealSlot]} · {menu.itemIds.length} items
                     </Text>
                     <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: 2 }}>
                       {formatTime(menu.votingOpensAt)} – {formatTime(menu.votingClosesAt)}
@@ -248,16 +247,6 @@ export default function DailyMenuBuilder() {
 }
 
 const styles = StyleSheet.create({
-  chipRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  chip: {
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-  },
   itemRow: {
     flexDirection: 'row',
     alignItems: 'center',

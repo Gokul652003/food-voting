@@ -1,6 +1,6 @@
 import { buildSeedDailyMenus, buildSeedVotes, SEED_MENU_ITEMS, SEED_USERS } from '@/data/seed';
 import { readCollection, writeCollection } from '@/services/storage';
-import type { DailyMenu, MenuItem, Role, User, Vote } from '@/types';
+import type { DailyMenu, MenuItem, User, Vote } from '@/types';
 
 /**
  * Mock service layer. Every function is async and shaped like it already
@@ -12,7 +12,7 @@ import type { DailyMenu, MenuItem, Role, User, Vote } from '@/types';
 const LATENCY_MS = 250;
 const delay = () => new Promise((resolve) => setTimeout(resolve, LATENCY_MS));
 
-let nextId = 1;
+let nextId = 0;
 function makeId(prefix: string): string {
   nextId += 1;
   return `${prefix}-${Date.now()}-${nextId}`;
@@ -23,7 +23,7 @@ export const usersApi = {
     await delay();
     return readCollection<User[]>('users', SEED_USERS);
   },
-  async create(input: { name: string; email: string; role: Role }): Promise<User> {
+  async create(input: Omit<User, 'id'>): Promise<User> {
     await delay();
     const users = await readCollection<User[]>('users', SEED_USERS);
     const user: User = { id: makeId('u'), ...input };
@@ -116,7 +116,7 @@ export const votesApi = {
     return readCollection<Vote[]>('votes', buildSeedVotes());
   },
   /** Upsert: one vote per (userId, dailyMenuId, menuItemId). */
-  async castVote(input: { userId: string; dailyMenuId: string; menuItemId: string; choice: boolean }): Promise<Vote> {
+  async castVote(input: Omit<Vote, 'id' | 'createdAt'>): Promise<Vote> {
     await delay();
     const votes = await readCollection<Vote[]>('votes', buildSeedVotes());
     const existingIndex = votes.findIndex(
