@@ -41,7 +41,7 @@ export function VoteToggle({ value, onChange, disabled }: VoteToggleProps) {
       >
         <Text
           style={{
-            color: value === true ? colors.primaryText : colors.textMuted,
+            color: value === true ? '#FFFFFF' : colors.textMuted,
             fontSize: fontSize.sm,
             fontWeight: '700',
           }}
@@ -65,7 +65,7 @@ export function VoteToggle({ value, onChange, disabled }: VoteToggleProps) {
       >
         <Text
           style={{
-            color: value === false ? colors.primaryText : colors.textMuted,
+            color: value === false ? '#FFFFFF' : colors.textMuted,
             fontSize: fontSize.sm,
             fontWeight: '700',
           }}
