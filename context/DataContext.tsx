@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { dailyMenusApi, menuItemsApi, usersApi, votesApi } from '@/services/api';
-import type { DailyMenu, MenuItem, Role, User, Vote } from '@/types';
+import type { DailyMenu, MenuItem, User, Vote } from '@/types';
 
 interface DataContextValue {
   loading: boolean;
@@ -11,7 +11,7 @@ interface DataContextValue {
   votes: Vote[];
   refetch: () => Promise<void>;
 
-  createUser: (input: { name: string; email: string; role: Role }) => Promise<User>;
+  createUser: (input: Omit<User, 'id'>) => Promise<User>;
   updateUser: (id: string, patch: Partial<Omit<User, 'id'>>) => Promise<User>;
   removeUser: (id: string) => Promise<void>;
 
