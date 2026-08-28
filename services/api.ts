@@ -116,7 +116,7 @@ export const votesApi = {
     return readCollection<Vote[]>('votes', buildSeedVotes());
   },
   /** Upsert: one vote per (userId, dailyMenuId, menuItemId). */
-  async castVote(input: { userId: string; dailyMenuId: string; menuItemId: string; choice: boolean }): Promise<Vote> {
+  async castVote(input: Omit<Vote, 'id' | 'createdAt'>): Promise<Vote> {
     await delay();
     const votes = await readCollection<Vote[]>('votes', buildSeedVotes());
     const existingIndex = votes.findIndex(
