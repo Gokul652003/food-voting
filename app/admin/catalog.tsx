@@ -9,7 +9,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { useTheme } from '@/constants/theme';
 import { useData } from '@/context/DataContext';
 import type { MealSlot, MenuItem } from '@/types';
-import { MEAL_SLOT_LABEL } from '@/utils/menu';
+import { MEAL_SLOT_ICON, MEAL_SLOT_LABEL } from '@/utils/menu';
 
 const MEAL_SLOTS: MealSlot[] = ['breakfast', 'lunch', 'snack', 'dinner'];
 
@@ -22,13 +22,6 @@ interface Draft {
 }
 
 const BLANK_DRAFT: Draft = { name: '', description: '', category: 'lunch', isCountable: false };
-
-const CATEGORY_ICON: Record<MealSlot, string> = {
-  breakfast: '🌅',
-  lunch: '🍲',
-  snack: '🥨',
-  dinner: '🌙',
-};
 
 export default function Catalog() {
   const { colors, spacing, radius, fontSize } = useTheme();
@@ -203,7 +196,7 @@ export default function Catalog() {
                           { backgroundColor: colors.surfaceAlt, borderRadius: radius.md, marginRight: spacing.md },
                         ]}
                       >
-                        <Text style={{ fontSize: 18 }}>{CATEGORY_ICON[item.category]}</Text>
+                        <Text style={{ fontSize: 18 }}>{MEAL_SLOT_ICON[item.category]}</Text>
                       </View>
                       <View style={{ flex: 1 }}>
                         <View style={styles.nameRow}>
