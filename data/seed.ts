@@ -20,18 +20,7 @@ export const SEED_USERS: User[] = [
 
 // Extra employees that only exist to give vote tallies something realistic to show —
 // not selectable on the login screen.
-export const SEED_GHOST_EMPLOYEE_IDS = [
-  'u-emp-101',
-  'u-emp-102',
-  'u-emp-103',
-  'u-emp-104',
-  'u-emp-105',
-  'u-emp-106',
-  'u-emp-107',
-  'u-emp-108',
-  'u-emp-109',
-  'u-emp-110',
-];
+export const SEED_GHOST_EMPLOYEE_IDS = Array.from({ length: 10 }, (_, i) => `u-emp-${101 + i}`);
 
 export const SEED_MENU_ITEMS: MenuItem[] = [
   { id: 'mi-idli', name: 'Idli', description: 'Steamed rice cakes, served with chutney', category: 'breakfast', isCountable: false },
