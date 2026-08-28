@@ -61,6 +61,8 @@ export default function DailyMenuBuilder() {
         itemIds: Array.from(selectedIds),
         votingOpensAt: opens.toISOString(),
         votingClosesAt: closes.toISOString(),
+        // Just a stored fallback — every screen derives the real, live status
+        // from the voting window via computeStatus() instead of reading this.
         status: 'open',
       });
       setSelectedIds(new Set());
