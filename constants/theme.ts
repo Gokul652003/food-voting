@@ -1,4 +1,4 @@
-import { useColorScheme } from 'react-native';
+import { StyleSheet, useColorScheme } from 'react-native';
 
 const palette = {
   amber400: '#FBBF24',
@@ -75,8 +75,29 @@ export const shadow = {
   lg: { shadowColor, shadowOffset: { width: 0, height: 12 }, shadowOpacity: 0.14, shadowRadius: 24, elevation: 8 },
 };
 
+// Shared shapes for the labeled-input + selectable-chip form pattern repeated
+// across the login, catalog and staff screens.
+export const formStyles = StyleSheet.create({
+  input: {
+    borderWidth: StyleSheet.hairlineWidth,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm + 2,
+    fontSize: fontSize.md,
+  },
+  chip: {
+    borderWidth: StyleSheet.hairlineWidth,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: 14,
+  },
+  chipRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+  },
+});
+
 export function useTheme() {
   const scheme = useColorScheme();
   const colors = scheme === 'dark' ? darkColors : lightColors;
-  return { colors, spacing, radius, fontSize, letterSpacing, shadow, isDark: scheme === 'dark' };
+  return { colors, spacing, radius, fontSize, letterSpacing, shadow, formStyles, isDark: scheme === 'dark' };
 }
