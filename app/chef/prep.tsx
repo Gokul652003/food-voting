@@ -9,7 +9,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { useTheme } from '@/constants/theme';
 import { useData } from '@/context/DataContext';
 import type { DailyMenuStatus } from '@/types';
-import { computeStatus, formatCountdown, formatTime, MEAL_SLOT_LABEL } from '@/utils/menu';
+import { computeStatus, formatCountdown, formatTime, MEAL_SLOT_ICON, MEAL_SLOT_LABEL } from '@/utils/menu';
 import { useNow } from '@/utils/useNow';
 
 const STATUS_BADGE: Record<DailyMenuStatus, { label: string; variant: 'success' | 'neutral' | 'danger' }> = {
@@ -17,8 +17,6 @@ const STATUS_BADGE: Record<DailyMenuStatus, { label: string; variant: 'success' 
   upcoming: { label: 'Opens soon', variant: 'neutral' },
   closed: { label: 'Final count', variant: 'danger' },
 };
-
-const SLOT_ICON: Record<string, string> = { breakfast: '🌅', lunch: '🍲', snack: '🥨', dinner: '🌙' };
 
 export default function PrepSummary() {
   const { colors, spacing, fontSize } = useTheme();
@@ -59,7 +57,7 @@ export default function PrepSummary() {
               <View key={menu.id} style={{ marginBottom: spacing.xl }}>
                 <View style={styles.sectionHeader}>
                   <Text style={{ color: colors.text, fontSize: fontSize.xl, fontWeight: '800' }}>
-                    {SLOT_ICON[menu.mealSlot]} {MEAL_SLOT_LABEL[menu.mealSlot]}
+                    {MEAL_SLOT_ICON[menu.mealSlot]} {MEAL_SLOT_LABEL[menu.mealSlot]}
                   </Text>
                   <Badge label={statusMeta.label} variant={statusMeta.variant} dot />
                 </View>
