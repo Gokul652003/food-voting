@@ -22,7 +22,7 @@ interface DataContextValue {
   createDailyMenu: (input: Omit<DailyMenu, 'id'>) => Promise<DailyMenu>;
   updateDailyMenu: (id: string, patch: Partial<Omit<DailyMenu, 'id'>>) => Promise<DailyMenu>;
 
-  castVote: (input: { userId: string; dailyMenuId: string; menuItemId: string; choice: boolean }) => Promise<Vote>;
+  castVote: (input: Omit<Vote, 'id' | 'createdAt'>) => Promise<Vote>;
 }
 
 const DataContext = createContext<DataContextValue | null>(null);
