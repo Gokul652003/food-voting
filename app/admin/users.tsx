@@ -103,12 +103,13 @@ export default function Users() {
                 <Pressable
                   key={r}
                   onPress={() => setDraft((d) => (d ? { ...d, role: r } : d))}
-                  style={[
+                  style={({ pressed }) => [
                     styles.chip,
                     {
                       borderRadius: radius.pill,
                       borderColor: colors.border,
                       backgroundColor: draft.role === r ? colors.primary : colors.surfaceAlt,
+                      opacity: pressed ? 0.7 : 1,
                     },
                   ]}
                 >
