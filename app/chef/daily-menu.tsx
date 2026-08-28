@@ -26,7 +26,7 @@ const STATUS_BADGE: Record<DailyMenuStatus, { label: string; variant: 'success' 
 };
 
 export default function DailyMenuBuilder() {
-  const { colors, spacing, radius, fontSize } = useTheme();
+  const { colors, spacing, radius, fontSize, formStyles } = useTheme();
   const { dailyMenus, menuItems, createDailyMenu, updateDailyMenu } = useData();
   const now = useNow();
 
@@ -86,7 +86,7 @@ export default function DailyMenuBuilder() {
           </Text>
 
           <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginBottom: spacing.xs }}>Meal slot</Text>
-          <View style={styles.chipRow}>
+          <View style={formStyles.chipRow}>
             {MEAL_SLOTS.map((s) => (
               <Pressable
                 key={s}
@@ -95,7 +95,7 @@ export default function DailyMenuBuilder() {
                   setSelectedIds(new Set());
                 }}
                 style={({ pressed }) => [
-                  styles.chip,
+                  formStyles.chip,
                   {
                     borderRadius: radius.pill,
                     borderColor: colors.border,
@@ -159,13 +159,13 @@ export default function DailyMenuBuilder() {
           <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: spacing.md, marginBottom: spacing.xs }}>
             Voting stays open for
           </Text>
-          <View style={styles.chipRow}>
+          <View style={formStyles.chipRow}>
             {DURATIONS.map((d) => (
               <Pressable
                 key={d.hours}
                 onPress={() => setDurationHours(d.hours)}
                 style={({ pressed }) => [
-                  styles.chip,
+                  formStyles.chip,
                   {
                     borderRadius: radius.pill,
                     borderColor: colors.border,
@@ -245,16 +245,6 @@ export default function DailyMenuBuilder() {
 }
 
 const styles = StyleSheet.create({
-  chipRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  chip: {
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-  },
   itemRow: {
     flexDirection: 'row',
     alignItems: 'center',
