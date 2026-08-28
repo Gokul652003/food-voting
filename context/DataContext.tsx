@@ -99,6 +99,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
   const castVote: DataContextValue['castVote'] = useCallback(async (input) => {
     const vote = await votesApi.castVote(input);
+    // votesApi.castVote itself may have updated an existing vote or inserted a
+    // new one; the local cache has to mirror whichever it did.
     setVotes((prev) => {
       const exists = prev.some((v) => v.id === vote.id);
       return exists ? prev.map((v) => (v.id === vote.id ? vote : v)) : [...prev, vote];
